@@ -1,5 +1,5 @@
 # Filogic
-MediaTek Filogic 130A develop kit:
+MediaTek Filogic 130A development kit:
 
 All sample codes are compiled on Arduino IDE
 
