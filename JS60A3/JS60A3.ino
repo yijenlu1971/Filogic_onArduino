@@ -1,43 +1,24 @@
-#include "hal_uart.h"
+#include "Arduino.h"
 
 #define BUF_SIZE  40
 
 bool bSend[2];
 int rcvLen[2], rcvIdx[2], tmCnt[2];
 unsigned char tmr, RsBuf[2][BUF_SIZE];
-unsigned char TxBuf[8] = {0xFC, 0xA5, 0, 0, 0, 0, 0xA1, 0x01};
-
-static volatile uint32_t send_notice = 1;
-uint8_t rx_vfifo_buffer[32];
-uint8_t tx_vfifo_buffer[32];
-
-void user_uart_callback(hal_uart_callback_event_t status, void *user_data)
-{
-  if( status == HAL_UART_EVENT_READY_TO_WRITE )
-    send_notice = 1;
-}
+uint8_t TxBuf[8] = {0xFC, 0xA5, 0, 0, 0, 0, 0xA1, 0x01};
+//uint8_t TxBuf[8] = {'A', 'B', 'C', 'D', 'A', 'D', 'B', 'C'};
 
 void setup()
 {
   int i;
-  hal_uart_config_t uart_config;
-
-  Serial.begin(115200);
-
-  // Configure UART PORT1
-  uart_config.baudrate = HAL_UART_BAUDRATE_115200;
-  uart_config.parity = HAL_UART_PARITY_NONE;
-  uart_config.stop_bit = HAL_UART_STOP_BIT_1;
-  uart_config.word_length = HAL_UART_WORD_LENGTH_8;
-  hal_uart_init(HAL_UART_0, &uart_config);
-  hal_uart_init(HAL_UART_2, &uart_config);
 
   for(i = 0; i < 2; i++)
   {
-    tmCnt[i] = rcvLen[i] = rcvIdx[i] = 0;
     bSend[i] = true;
+    rcvLen[i] = rcvIdx[i] = tmCnt[i] = 0;
   }
 
+  Serial.begin(460800);  
   delay(1000);
 }
 
@@ -68,10 +49,11 @@ void AddRxData(int port, unsigned char data)
       {
         rcvLen[port] = rcvIdx[port] = 0;
         bSend[port] = true;
+        delayMicroseconds(200);
       }
-      /*else
+      else
       {
-        Serial.print(rcvLen[port]);
+        /*Serial.print(rcvLen[port]);
         Serial.print(':');
         Serial.print(rcvIdx[port]);
         Serial.print(':');
@@ -83,26 +65,38 @@ void AddRxData(int port, unsigned char data)
         Serial.print(',');
         Serial.print(port);
         Serial.println(" error!!!");
-        rcvLen[port] = rcvIdx[port] = 0;
-      }*/
+        rcvLen[port] = rcvIdx[port] = 0;*/
+      }
     }
   }
 }
+
 void loop()
 {
-  unsigned short i, len;
-  hal_uart_port_t uPort[2] = {HAL_UART_0, HAL_UART_2};
+  unsigned char val;
 
-  hal_uart_send_polling(HAL_UART_1, TxBuf, 8);
-  hal_uart_send_polling(HAL_UART_2, TxBuf, 8);
-
-  for(i = 0; i < 2; i++)
+  while( Serial.available() > 0 )
   {
-    len = hal_uart_receive_polling(uPort[i], RsBuf[i], BUF_SIZE);
-    
+    //val = Serial.read();
+    //Serial.println(val);
+    AddRxData(0, Serial.read());
   }
 
-  Serial.println("123");
-  delay(1);
+  if( bSend[0] )
+  {
+    Serial.write(TxBuf, 8);
+    bSend[0] = false;
+    tmCnt[0] = 0;
+  }
+  else
+  {
+    if( ++tmCnt[0] > 1000 )
+    {
+      tmCnt[0] = 0;
+      bSend[0] = true;
+    }
+  }
+  
+  delayMicroseconds(200);
 }
 
