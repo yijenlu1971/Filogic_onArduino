@@ -14,7 +14,8 @@ int ListWavFiles(FileName *list);
 void PlayWavFile(char *fname);
 }
 
-int sd_cd = 12; //35;
+int sd_cd = 12; // SD card
+//int sd_cd = 35; // microSD
 bool bMount = false;
 int     fNum = 0;
 FileName  flist[16] = {0};
@@ -23,7 +24,8 @@ void TaskSDDetect(void *pvParameters) {
   while(1) {
     if (digitalRead(sd_cd) == 0) {
       if( !bMount ) {
-        bMount = true;        
+        bMount = true;
+        vTaskDelay(500);
         if( ff_SD_mount(1) == 1 ) fNum = ListWavFiles(flist);
       }
     }
@@ -63,8 +65,12 @@ void setup() {
   Serial.begin(115200);
   pinMode(sd_cd, INPUT_PULLUP);
 
+  // DSP & voice assistant
+//  enable_adsp();
+//  va_enable();
+  
   // Priority, (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-  xTaskCreate( TaskPlayMusic, "PLAY", 4096/sizeof(portSTACK_TYPE), NULL, 1, NULL);
+  xTaskCreate( TaskPlayMusic, "PLAY", 8192/sizeof(portSTACK_TYPE), NULL, 1, NULL);
   xTaskCreate( TaskSDDetect, "SDCD", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
 }
 

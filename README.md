@@ -38,8 +38,12 @@ SimplePeripheral : As BLE peripheral side.
 ConnectPeripher : As BLE central side. 
 當做藍芽 BLE central 端，主動去連接某一 BLE peripheral 設備。
 
+####################
+
+Display_Adafruit, SSD1306_Adafruit, TFT7735_Adafruit (based on SDK v1.1.0 or above)
+基於Adafruit GFX library, 在 TFT-LCD 和 OLED 模組上顯示各類圖形
 
 ####################
 
-Display_Adafruit, SSD1306_Adafruit, TFT7735_Adafruit
-基於Adafruit GFX library, 在 TFT-LCD 和 OLED 模組上顯示各類圖形
+PlayWavFromSD : play wave files from SD card (based on SDK v1.2.0 or above)
+讀取SD卡的 wav 檔案，並且播放出來
