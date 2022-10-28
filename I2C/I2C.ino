@@ -27,16 +27,6 @@ void setup() {
     ; // wait for serial port to connect. Needed for native USB port only
   }
 
-  // show all GPIO mapping
-  /*for(int i = 0; i < HAL_GPIO_MAX; i++)
-  {
-    hal_gpio_get_function((hal_gpio_pin_t)i, &gpioMode);
-    hal_gpio_get_direction((hal_gpio_pin_t)i, &gpioDir);
-    // show all GPIO mode and direction
-    sprintf(buf, "GPIO%d Mode=%d DIR=%d\n", i, gpioMode, gpioDir);
-    Serial.print(buf);
-  }*/
-
   hal_i2c_master_deinit(HAL_I2C_MASTER_1);
   i2c_cfg.frequency = HAL_I2C_FREQUENCY_400K;
   if( HAL_I2C_STATUS_OK != hal_i2c_master_init(HAL_I2C_MASTER_1, &i2c_cfg) )
@@ -45,6 +35,12 @@ void setup() {
   }
 
   Lcm_Init(0x27);
+  delay(500);
+
+  LCD_SendString(0, "Filogic 130A    ");
+  LCD_SendString(1, "Hello World!!   ");
+  delay(5000);
+
   Sht_Reset(0x44);
   delay(500);
 
