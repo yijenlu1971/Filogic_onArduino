@@ -20,8 +20,8 @@
 
 #define LED_BUILTIN   7
 
-char ssid[] = "ASUS";     //  your network SSID (name)
-char pass[] = "0915058267";  // your network password
+char ssid[] = "ssid";     //  your network SSID (name)
+char pass[] = "1234567890";  // your network password
 int status = WL_IDLE_STATUS;     // the Wifi radio's status
 //TLSClient iotClient;
 bool bOn = false;
