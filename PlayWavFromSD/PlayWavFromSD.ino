@@ -66,8 +66,8 @@ void setup() {
   pinMode(sd_cd, INPUT_PULLUP);
 
   // DSP & voice assistant
-//  enable_adsp();
-//  va_enable();
+  enable_adsp();
+  va_enable();
   
   // Priority, (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
   xTaskCreate( TaskPlayMusic, "PLAY", 8192/sizeof(portSTACK_TYPE), NULL, 1, NULL);

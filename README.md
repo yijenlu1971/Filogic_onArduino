@@ -48,7 +48,8 @@ Display_Adafruit, SSD1306_Adafruit, TFT7735_Adafruit (based on SDK v1.1.0 or abo
 ####################
 
 PlayWavFromSD : play wave files from SD card (based on SDK v1.2.0 or above)
-讀取SD卡的 wav 檔案，並且播放出來
+                also includes ASR demo.
+讀取SD卡的 wav 檔案，並且播放出來。範例中，也包含語音辨識的demo
 
 --------------------
 

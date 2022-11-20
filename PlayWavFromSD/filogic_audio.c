@@ -382,17 +382,17 @@ int enable_adsp(void)
     return 0;
 }
 
-TaskHandle_t g_handler_1 = NULL;
+extern TaskHandle_t g_handler;
 
 
 static TaskHandle_t get_handle(void)
 {
-    return g_handler_1;
+    return g_handler;
 }
 
 static void set_handle(TaskHandle_t thread_handler)
 {
-    g_handler_1 = thread_handler;
+    g_handler = thread_handler;
 }
 
 struct va_task *task_constructor_va(void)
