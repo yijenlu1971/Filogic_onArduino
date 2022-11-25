@@ -19,8 +19,8 @@
 #define BUF_SIZE    (512)
 #define URL_BUF_LEN (256)
 
-char ssid[] = "ASUS";     //  your network SSID (name)
-char pass[] = "0915058267";  // your network password
+char ssid[] = "ssid";     //  your network SSID (name)
+char pass[] = "1234567890";  // your network password
 int status = WL_IDLE_STATUS;     // the Wifi radio's status
 
 httpclient_t iotClient = {0};

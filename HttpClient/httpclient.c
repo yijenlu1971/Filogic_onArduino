@@ -22,6 +22,7 @@
 #include "lwip/netdb.h"
 #include "lwip/tcp.h"
 #include "lwip/err.h"
+#include "lwip/errno.h"
 
 #ifdef DBG
 #undef DBG
@@ -62,6 +63,7 @@ static int httpclient_ssl_send_all(mbedtls_ssl_context *ssl, const char *data, s
 static int httpclient_ssl_nonblock_recv(void *ctx, unsigned char *buf, size_t len);
 static int httpclient_ssl_close(httpclient_t *client);
 #endif
+static int errno;
 
 static void httpclient_base64enc(char *out, const char *in)
 {
