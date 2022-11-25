@@ -10,7 +10,7 @@
 #define TARGET_NAME   "MTK_BLE Lab X"
 #define SERVICE_UUID  "110C0010-E8F2-537E-4F6C-D104768A1214"
 #define CHARACT_UUID  "110C0011-E8F2-537E-4F6C-D104768A1214"
-#define BTN_NUM       6
+#define BTN_NUM       47
 
 LBLEClient client;
 int serviceIdx = -1, charactIdx = -1;
