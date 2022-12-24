@@ -1,11 +1,21 @@
 #include "Arduino.h"
 #include "hal_gpio.h"
 
+#define INT_ENABLE    0
+
 #define LED_BUILTIN   7
 #define SW_KEY_2     47
 #define SW_KEY_3     49
 
 bool bOn = false;
+
+#if INT_ENABLE
+bool bKey2 = false;
+void key2_change(void)
+{
+  bKey2 = true;
+}
+#endif
 
 void setup() {
   char  buf[32];
@@ -29,29 +39,39 @@ void setup() {
     Serial.print(buf);
   }
 
-//  pinMode(SW_KEY_2, INPUT_PULLUP);
-//  pinMode(SW_KEY_3, INPUT_PULLUP);
+  pinMode(SW_KEY_2, INPUT_PULLUP);
+  pinMode(SW_KEY_3, INPUT_PULLUP);
 
   // Initialize LED pin
   pinMode(6, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(6, HIGH);
   digitalWrite(LED_BUILTIN, LOW);
+
+#if INT_ENABLE
+  attachInterrupt(SW_KEY_2, key2_change, CHANGE);
+#endif
 }
 
 void loop() {
   hal_gpio_data_t   value;
 //  Serial.println(bOn);
+#if !INT_ENABLE
   hal_gpio_get_input((hal_gpio_pin_t)SW_KEY_2, &value);
   Serial.print(value);
-  Serial.print(",");  
+#else
+  Serial.print(bKey2);
+  if( bKey2 ) bKey2 = false;
+#endif
+  Serial.print(",");
   hal_gpio_get_input((hal_gpio_pin_t)SW_KEY_3, &value);
   Serial.println(value);
- 
+
   /*Serial.print(digitalRead(SW_KEY_2));
   Serial.print(",");  
   Serial.println(digitalRead(SW_KEY_3));*/
   digitalWrite(LED_BUILTIN, bOn ? HIGH : LOW);
+  digitalWrite(6, bOn ? HIGH : LOW);
   bOn = !bOn;
 
   delay(1000);

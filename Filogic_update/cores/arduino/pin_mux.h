@@ -44,60 +44,60 @@ typedef struct pin_desc
 		.pin_current_function = 0xff,	\
 	}
 
-// TODO: SPI is TBD.
-#define	PIN_DESC_0	PIN_DESC(HAL_GPIO_0,  8, -1, 9, 7, -1, -1,  0, HAL_PWM_0)  // UART0_RTS
-#define	PIN_DESC_1	PIN_DESC(HAL_GPIO_1,  8, -1, 9, 7, -1, -1,  1, HAL_PWM_1)  // UART0_CTS
-#define	PIN_DESC_2	PIN_DESC(HAL_GPIO_2,  8, -1, 9, 7, -1, -1, -1, HAL_PWM_0) // UART0_RX
-#define	PIN_DESC_3	PIN_DESC(HAL_GPIO_3,  8, -1, 9, 7, -1, -1,  2, HAL_PWM_0) // UART0_TX
-#define	PIN_DESC_4	PIN_DESC(HAL_GPIO_4,  8, -1, 9,-1, -1, -1,  3, HAL_PWM_2)
-#define	PIN_DESC_5	PIN_DESC(HAL_GPIO_5,  8, -1, 9,-1, -1, -1,  4, HAL_PWM_3)
-#define	PIN_DESC_6	PIN_DESC(HAL_GPIO_6,  8, -1, 9,-1, -1, -1,  5, HAL_GPIO_6)
-#define	PIN_DESC_7	PIN_DESC(HAL_GPIO_7,  8, -1, 9,-1, -1, -1,  6, HAL_GPIO_7)
-#define	PIN_DESC_8	PIN_DESC(HAL_GPIO_8,  8, -1, 9,-1, -1, -1,  6, HAL_GPIO_8)
-#define	PIN_DESC_9	PIN_DESC(HAL_GPIO_9,  8, -1, 9,-1, -1, -1,  6, HAL_GPIO_9)
-#define	PIN_DESC_10	PIN_DESC(HAL_GPIO_10, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_10)
-#define	PIN_DESC_11	PIN_DESC(HAL_GPIO_11, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_11)
-#define	PIN_DESC_12	PIN_DESC(HAL_GPIO_12, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_12)
-#define	PIN_DESC_13	PIN_DESC(HAL_GPIO_13, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_13)
-#define	PIN_DESC_14	PIN_DESC(HAL_GPIO_14, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_14)
-#define	PIN_DESC_15	PIN_DESC(HAL_GPIO_15, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_15)
-#define	PIN_DESC_16	PIN_DESC(HAL_GPIO_16, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_16)
-#define	PIN_DESC_17	PIN_DESC(HAL_GPIO_17, 8,  6, 9,-1, -1, -1,  6, HAL_ADC_CHANNEL_8)
-#define	PIN_DESC_18	PIN_DESC(HAL_GPIO_18, 8, -1, 9,-1, -1, -1,  6, HAL_GPIO_18)
-#define	PIN_DESC_19	PIN_DESC(HAL_GPIO_19, 8, -1, 9,-1,  3, -1,  6, HAL_I2C_MASTER_1) // I2C1 DATA
-#define	PIN_DESC_20	PIN_DESC(HAL_GPIO_20, 8, -1, 9,-1,  3, -1,  6, HAL_I2C_MASTER_1) // I2C1 CLK
-#define	PIN_DESC_21	PIN_DESC(HAL_GPIO_21, 8,  6, 9,-1, -1, -1,  6, HAL_ADC_CHANNEL_9)
-#define	PIN_DESC_22	PIN_DESC(HAL_GPIO_22, 8,  6, 9,-1, -1, -1,  6, HAL_ADC_CHANNEL_10)
-#define	PIN_DESC_23	PIN_DESC(HAL_GPIO_23, 8, -1, 9,-1,  3, -1,  6, HAL_I2C_MASTER_0) // I2C0 DATA
-#define	PIN_DESC_24	PIN_DESC(HAL_GPIO_24, 8, -1, 9,-1,  3, -1, -1, HAL_I2C_MASTER_0) // I2C0 CLK
-#define	PIN_DESC_25	PIN_DESC(HAL_GPIO_25, 8, -1, 9,-1, -1, -1, -1, HAL_PWM_0)
-#define	PIN_DESC_26	PIN_DESC(HAL_GPIO_26, 8, -1, 9,-1, -1, -1, -1, HAL_PWM_0)
-#define	PIN_DESC_27	PIN_DESC(HAL_GPIO_27, 8, -1, 9,-1, -1, -1, -1, HAL_PWM_0)
-#define	PIN_DESC_28	PIN_DESC(HAL_GPIO_28, 8, -1, 9,-1, -1, -1, -1, HAL_PWM_0)
-#define	PIN_DESC_29	PIN_DESC(HAL_GPIO_29, 8, -1, 3,-1, -1,  7, -1, HAL_PWM_0)
-#define	PIN_DESC_30	PIN_DESC(HAL_GPIO_30, 8, -1, 3,-1, -1,  7, -1, HAL_PWM_1)
-#define	PIN_DESC_31	PIN_DESC(HAL_GPIO_31, 8, -1, 3,-1, -1,  7, -1, HAL_PWM_2)
-#define	PIN_DESC_32	PIN_DESC(HAL_GPIO_32, 8, -1, 3,-1, -1,  8, -1, HAL_PWM_3)
-#define	PIN_DESC_33	PIN_DESC(HAL_GPIO_33, 8, -1, 3,-1, -1, -1, -1, HAL_PWM_4)
-#define	PIN_DESC_34	PIN_DESC(HAL_GPIO_34, 8, -1, 3,-1, -1, -1, -1, HAL_PWM_5)
-#define	PIN_DESC_35	PIN_DESC(HAL_GPIO_35, 8, -1, 3,-1, -1, -1,  6, HAL_PWM_6) // UART DBG TX
-#define	PIN_DESC_36	PIN_DESC(HAL_GPIO_36, 8, -1, 3, 7, -1, -1, -1, HAL_PWM_7) // UART1 RX
-#define	PIN_DESC_37	PIN_DESC(HAL_GPIO_37, 8, -1, 3, 7, -1, -1, 20, HAL_PWM_8) // UART1 TX
-#define	PIN_DESC_38	PIN_DESC(HAL_GPIO_38, 8, -1, 3, 7, -1, -1, 21, HAL_PWM_9) // UART1 RTS
-#define	PIN_DESC_39	PIN_DESC(HAL_GPIO_39, 8, -1, 3, 7, -1, -1, 22, HAL_PWM_10)// UART1 CTS
-#define	PIN_DESC_40	PIN_DESC(HAL_GPIO_40, 8, -1, 3, 7, -1, -1, 22, HAL_PWM_11)
-#define	PIN_DESC_41	PIN_DESC(HAL_GPIO_41, 8, -1, 9, 7,  3, -1, 22, HAL_I2C_MASTER_0) // I2C0 DATA
-#define	PIN_DESC_42	PIN_DESC(HAL_GPIO_42, 8, -1, 9, 3, -1, -1, 22, HAL_UART_1)
-#define	PIN_DESC_43	PIN_DESC(HAL_GPIO_43, 8, -1, 9, 7,  3, -1, 22, HAL_I2C_MASTER_0) // I2C0 CLK
-#define	PIN_DESC_44	PIN_DESC(HAL_GPIO_44, 8, -1, 9, 3, -1, -1, 22, HAL_UART_1)
-#define	PIN_DESC_45	PIN_DESC(HAL_GPIO_45, 8, -1, 9, 7,  3, -1, 22, HAL_I2C_MASTER_1) // I2C1 DATA
-#define	PIN_DESC_46	PIN_DESC(HAL_GPIO_46, 8, -1, 9, 7,  3, -1, 22, HAL_I2C_MASTER_1) // I2C1 CLK
-#define	PIN_DESC_47	PIN_DESC(HAL_GPIO_47, 8, -1, 9, 7, -1, -1, 22, HAL_PWM_0)
-#define	PIN_DESC_48	PIN_DESC(HAL_GPIO_48, 8, -1, 9, 7, -1, -1, 22, HAL_PWM_0)
-#define	PIN_DESC_49	PIN_DESC(HAL_GPIO_49, 8, -1, 9, 7, -1, -1, 22, HAL_PWM_0)
-#define	PIN_DESC_50	PIN_DESC(HAL_GPIO_50, 8, -1, 9, 7, -1, -1, 22, HAL_PWM_0)
-#define	PIN_DESC_51	PIN_DESC(HAL_GPIO_51, 8, -1, 9, 7, -1, -1, 22, HAL_PWM_0)
-#define	PIN_DESC_52	PIN_DESC(HAL_GPIO_52, 8, -1, 9, 7, -1, -1, 22, HAL_PWM_0)
+// TODO: SPI is TBD.				   gpio,adc,pwm,uart,i2c,spi,eint,
+#define	PIN_DESC_0	PIN_DESC(HAL_GPIO_0,  8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0)  // UART0_RTS
+#define	PIN_DESC_1	PIN_DESC(HAL_GPIO_1,  8, -1,  9,   7, -1, -1,  -1, HAL_PWM_1)  // UART0_CTS
+#define	PIN_DESC_2	PIN_DESC(HAL_GPIO_2,  8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0) // UART0_RX
+#define	PIN_DESC_3	PIN_DESC(HAL_GPIO_3,  8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0) // UART0_TX
+#define	PIN_DESC_4	PIN_DESC(HAL_GPIO_4,  8, -1,  9,  -1, -1, -1,  -1, HAL_PWM_2)
+#define	PIN_DESC_5	PIN_DESC(HAL_GPIO_5,  8, -1,  9,  -1, -1, -1,  -1, HAL_PWM_3)
+#define	PIN_DESC_6	PIN_DESC(HAL_GPIO_6,  8, -1,  9,  -1, -1, -1,   0, HAL_GPIO_6)
+#define	PIN_DESC_7	PIN_DESC(HAL_GPIO_7,  8, -1,  9,  -1, -1, -1,   1, HAL_GPIO_7)
+#define	PIN_DESC_8	PIN_DESC(HAL_GPIO_8,  8, -1,  9,  -1, -1, -1,   0, HAL_GPIO_8)
+#define	PIN_DESC_9	PIN_DESC(HAL_GPIO_9,  8, -1,  9,  -1, -1, -1,   1, HAL_GPIO_9)
+#define	PIN_DESC_10	PIN_DESC(HAL_GPIO_10, 8, -1,  9,  -1, -1, -1,   2, HAL_GPIO_10)
+#define	PIN_DESC_11	PIN_DESC(HAL_GPIO_11, 8, -1,  9,  -1, -1, -1,   3, HAL_GPIO_11)
+#define	PIN_DESC_12	PIN_DESC(HAL_GPIO_12, 8, -1,  9,  -1, -1, -1,   4, HAL_GPIO_12)
+#define	PIN_DESC_13	PIN_DESC(HAL_GPIO_13, 8, -1,  9,  -1, -1, -1,   5, HAL_GPIO_13)
+#define	PIN_DESC_14	PIN_DESC(HAL_GPIO_14, 8, -1,  9,  -1, -1, -1,   6, HAL_GPIO_14)
+#define	PIN_DESC_15	PIN_DESC(HAL_GPIO_15, 8, -1,  9,  -1,  7, -1,   7, HAL_GPIO_15)
+#define	PIN_DESC_16	PIN_DESC(HAL_GPIO_16, 8, -1,  9,  -1, -1, -1,   8, HAL_GPIO_16)
+#define	PIN_DESC_17	PIN_DESC(HAL_GPIO_17, 8,  6,  9,  -1, -1, -1,   9, HAL_ADC_CHANNEL_8)
+#define	PIN_DESC_18	PIN_DESC(HAL_GPIO_18, 8, -1,  9,  -1, -1, -1,  10, HAL_GPIO_18)
+#define	PIN_DESC_19	PIN_DESC(HAL_GPIO_19, 8, -1,  9,  -1,  3, -1,  11, HAL_I2C_MASTER_1) // I2C1 DATA
+#define	PIN_DESC_20	PIN_DESC(HAL_GPIO_20, 8, -1,  9,  -1,  3, -1,  12, HAL_I2C_MASTER_1) // I2C1 CLK
+#define	PIN_DESC_21	PIN_DESC(HAL_GPIO_21, 8,  6,  9,  -1, -1, -1,  13, HAL_ADC_CHANNEL_9)
+#define	PIN_DESC_22	PIN_DESC(HAL_GPIO_22, 8,  6,  9,  -1, -1, -1,  14, HAL_ADC_CHANNEL_10)
+#define	PIN_DESC_23	PIN_DESC(HAL_GPIO_23, 8, -1,  9,  -1,  3, -1,  15, HAL_I2C_MASTER_0) // I2C0 DATA
+#define	PIN_DESC_24	PIN_DESC(HAL_GPIO_24, 8, -1,  9,  -1,  3, -1,  16, HAL_I2C_MASTER_0) // I2C0 CLK
+#define	PIN_DESC_25	PIN_DESC(HAL_GPIO_25, 8, -1,  9,  -1, -1, -1,  17, HAL_PWM_0)
+#define	PIN_DESC_26	PIN_DESC(HAL_GPIO_26, 8, -1,  9,  -1, -1, -1,  18, HAL_PWM_0)
+#define	PIN_DESC_27	PIN_DESC(HAL_GPIO_27, 8, -1,  9,  -1, -1, -1,  19, HAL_PWM_0)
+#define	PIN_DESC_28	PIN_DESC(HAL_GPIO_28, 8, -1,  9,  -1, -1, -1,  20, HAL_PWM_0)
+#define	PIN_DESC_29	PIN_DESC(HAL_GPIO_29, 8, -1,  3,  -1, -1,  7,  21, HAL_PWM_0)
+#define	PIN_DESC_30	PIN_DESC(HAL_GPIO_30, 8, -1,  3,  -1, -1,  7,  22, HAL_PWM_1)
+#define	PIN_DESC_31	PIN_DESC(HAL_GPIO_31, 8, -1,  3,  -1, -1,  7,  23, HAL_PWM_2)
+#define	PIN_DESC_32	PIN_DESC(HAL_GPIO_32, 8, -1,  3,  -1, -1,  8,  24, HAL_PWM_3)
+#define	PIN_DESC_33	PIN_DESC(HAL_GPIO_33, 8, -1,  3,  -1, -1, -1,  25, HAL_PWM_4)
+#define	PIN_DESC_34	PIN_DESC(HAL_GPIO_34, 8, -1,  3,  -1, -1, -1,  26, HAL_PWM_5)
+#define	PIN_DESC_35	PIN_DESC(HAL_GPIO_35, 8, -1,  3,  -1, -1, -1,  27, HAL_PWM_6) // UART DBG TX
+#define	PIN_DESC_36	PIN_DESC(HAL_GPIO_36, 8, -1,  3,   7, -1, -1,  28, HAL_PWM_7) // UART1 RX
+#define	PIN_DESC_37	PIN_DESC(HAL_GPIO_37, 8, -1,  3,   7,  7, -1,  29, HAL_PWM_8) // UART1 TX
+#define	PIN_DESC_38	PIN_DESC(HAL_GPIO_38, 8, -1,  3,   7, -1, -1,  30, HAL_PWM_9) // UART1 RTS
+#define	PIN_DESC_39	PIN_DESC(HAL_GPIO_39, 8, -1,  3,   7, -1, -1,  -1, HAL_PWM_10)// UART1 CTS
+#define	PIN_DESC_40	PIN_DESC(HAL_GPIO_40, 8, -1,  3,   7, -1, -1,  -1, HAL_PWM_11)
+#define	PIN_DESC_41	PIN_DESC(HAL_GPIO_41, 8, -1,  9,   7,  3, -1,   0, HAL_I2C_MASTER_0) // I2C0 DATA
+#define	PIN_DESC_42	PIN_DESC(HAL_GPIO_42, 8, -1,  9,   3, -1, -1,   1, HAL_UART_1)
+#define	PIN_DESC_43	PIN_DESC(HAL_GPIO_43, 8, -1,  9,   7,  3, -1,  -1, HAL_I2C_MASTER_0) // I2C0 CLK
+#define	PIN_DESC_44	PIN_DESC(HAL_GPIO_44, 8, -1,  9,   3, -1, -1,  -1, HAL_UART_1)
+#define	PIN_DESC_45	PIN_DESC(HAL_GPIO_45, 8, -1,  9,   7,  3, -1,  -1, HAL_I2C_MASTER_1) // I2C1 DATA
+#define	PIN_DESC_46	PIN_DESC(HAL_GPIO_46, 8, -1,  9,   7,  3, -1,  -1, HAL_I2C_MASTER_1) // I2C1 CLK
+#define	PIN_DESC_47	PIN_DESC(HAL_GPIO_47, 8, -1,  9,   7,  7, -1,   2, HAL_PWM_0)
+#define	PIN_DESC_48	PIN_DESC(HAL_GPIO_48, 8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0)
+#define	PIN_DESC_49	PIN_DESC(HAL_GPIO_49, 8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0)
+#define	PIN_DESC_50	PIN_DESC(HAL_GPIO_50, 8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0)
+#define	PIN_DESC_51	PIN_DESC(HAL_GPIO_51, 8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0)
+#define	PIN_DESC_52	PIN_DESC(HAL_GPIO_52, 8, -1,  9,   7, -1, -1,  -1, HAL_PWM_0)
 
 // Select GPIO mode when enable ADC
 //#define	PIN_DESC_57	PIN_DESC(HAL_GPIO_57, 8,  8, 9,-1, -1, -1, -1, HAL_PWM_36) // ADC_IN0

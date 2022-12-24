@@ -6,6 +6,7 @@
 // 测试在100毫秒时间内，霍尔编码器得到的脉冲数
 
 #define PWM_FREQUENCY     20000
+#define INT_ENABLE        1
 
 //TB6612引脚定义
 const int right_R1 = 11;    
@@ -39,6 +40,11 @@ void setup()
 
   pinMode(PinA_left, INPUT);    //设置检测脉冲的引脚为输入状态
   pinMode(PinA_right, INPUT);
+#if INT_ENABLE
+  //外部中断，用于计算车轮转速
+  attachInterruptWithDebounce(PinA_left, Code_left, CHANGE, 0);  //PinA_left引脚的电平发生改变触发外部中断，执行子函数 Code_left
+  attachInterruptWithDebounce(PinA_right, Code_right, CHANGE, 0); //PinA_right引脚的电平发生改变触发外部中断，执行子函数 Code_right
+#endif
 }
 
 void loop() 
@@ -56,8 +62,9 @@ void loop()
   newtime = times = millis();         //使变量newtime和times都等于程序运行到这的时间
   while ((newtime - times) < d_time)  //如果小于设定时间d_time，就一直循环
   {
+#if !INT_ENABLE
     readLVal = digitalRead(PinA_left);
-    readRVal = digitalRead(PinA_right); 
+    readRVal = digitalRead(PinA_right);
 
     if( (readLVal + flagA) == 1 ) {   //偵測到電位的變化
       valA++;
@@ -67,7 +74,7 @@ void loop()
       valB++;
       flagB = !flagB;
     }
-
+#endif
     newtime = millis(); //newtime等于程序运行到这的时间    
   }
 
@@ -75,4 +82,16 @@ void loop()
   Serial.println(valB);
   valA = valB = 0;
 }
-
+#if INT_ENABLE
+/////////////////////霍尔计数/////////////////////////
+//左测速码盘计数
+void Code_left() 
+{
+  valA ++;
+}
+//右测速码盘计数
+void Code_right() 
+{
+  valB ++;
+}
+#endif
