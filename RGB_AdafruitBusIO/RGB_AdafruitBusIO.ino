@@ -1,3 +1,6 @@
+// Youtube 影片: 深入研究 SPI, SDIO, Audio interface on Filogic130A 與操作教學 (Arduino IDE)
+// https://youtu.be/D6tEVUoJPQ8
+
 #include <Adafruit_SPIDevice.h>
 
 typedef struct led_cmd
@@ -61,4 +64,3 @@ void loop() {
   spi_dev.write((const uint8_t*)&led_cmd, sizeof(led_cmd), NULL, 0);
   delay(2000);
 }
-

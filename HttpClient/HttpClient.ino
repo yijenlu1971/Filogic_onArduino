@@ -13,6 +13,11 @@
   modified 23 May 2017
   by MediaTek Labs
 */
+
+// Youtube 影片: Develop WiFi interface on Filogic130A (Arduino IDE), 
+// 教學 HTTP data to cloud 數據上雲端。
+// https://youtu.be/OTzjujqmcdo
+
 #include <LWiFi.h>
 #include "httpclient.h"
 

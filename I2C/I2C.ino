@@ -1,3 +1,6 @@
+// Youtube I2C 實作影片: Filogic130A 溫溼度、光照感測器 I2C介面教學 (Arduino IDE)
+// https://youtu.be/UQumrcPdIuA
+
 #include "Arduino.h"
 #include "lcm_i2c.h"
 #include "sensors_i2c.h"
@@ -56,12 +59,14 @@ void loop() {
   if( !Bh1750_LightLevel(&bhVal) )
   {
     sprintf((char*)buf, "LX:%5d        ", bhVal);
+    Serial.print((char*)buf); Serial.print("\n");
     LCD_SendString(0, (char*)buf);
   }
 
   if( !Sht_GetTempHumidity(&tempVal, &humVal) )
   {
     sprintf((char*)buf, "T:%2d.%1dC H:%2d.%1d%% ", tempVal/10, tempVal - (tempVal/10)*10, humVal/10, humVal - (humVal/10)*10);
+    Serial.print((char*)buf);  Serial.print("\n");
     LCD_SendString(1, (char*)buf);
   }
 

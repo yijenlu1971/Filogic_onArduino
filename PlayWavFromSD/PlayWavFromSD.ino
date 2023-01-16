@@ -1,6 +1,10 @@
 /* 
  * Audio Playback from SD.
  */
+
+// Youtube 影片: 深入研究 SPI, SDIO, Audio interface on Filogic130A 與操作教學 (Arduino IDE)
+// https://youtu.be/D6tEVUoJPQ8
+
 #include <Arduino.h>
 #include "FreeRTOS.h"
 #include "task.h"

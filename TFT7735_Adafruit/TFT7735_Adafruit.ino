@@ -32,6 +32,9 @@
   MIT license, all text above must be included in any redistribution
  **************************************************************************/
 
+// Youtube 影片: 顯示模組 TFT-LCD ST7735 & OLED 1306 on Filogic130A (Arduino IDE)
+// https://youtu.be/JF1PXoPQ5IE
+
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library for ST7735
 #include <Adafruit_ST7789.h> // Hardware-specific library for ST7789

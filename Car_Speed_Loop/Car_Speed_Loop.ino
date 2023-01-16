@@ -1,10 +1,14 @@
-#include <MPU6050.h>    //MPU6050的库文件
+// Youtube 實作影片: 在聯發科的 Filogic130A 上面，實現平衡車的控制 (Self-balancing Car Kit)
+// https://youtu.be/5AdmrOqahCM
+
+//#include <MPU6050.h>    //MPU6050的库文件
 #include <Wire.h>       //I2C通讯库文件
 #include "LTimer.h"
 
 #define PWM_FREQUENCY     20000
+#define MPU_ADDR  0x68
 
-MPU6050 mpu6050;     //实例化一个MPU6050对象，对象名称为mpu6050
+//MPU6050 mpu6050;     //实例化一个MPU6050对象，对象名称为mpu6050
 int16_t ax, ay, az, gx, gy, gz;     //定义三轴加速度，三轴陀螺仪的变量
 
 LTimer timer0(LTIMER_0);
@@ -46,7 +50,7 @@ float PCt_0, PCt_1, E;
 
 //////////////////////PID参数///////////////////////////////
 double kp = 34, ki = 0, kd = 0.62;                      //角度环参数
-double kp_speed = 3.6, ki_speed = 0.080, kd_speed = 0;  //速度环参数
+double kp_speed = 3.6, ki_speed = 0.080; // kd_speed = 0;  //速度环参数
 double setp0 = 0; //角度平衡点
 int PD_pwm;  //角度输出
 float pwm1 = 0, pwm2 = 0;
@@ -58,10 +62,8 @@ volatile long count_right = 0;//用于计算霍尔编码器计算的脉冲值(vo
 volatile long count_left = 0;
 
 //////////////////////脉冲计算/////////////////////////
-int lz = 0;
-int rz = 0;
-int rpluse = 0;
-int lpluse = 0;
+//int lz = 0;
+//int rz = 0;
 int pulseright, pulseleft;
 ////////////////////////////////PI变量参数//////////////////////////
 float speeds_filterold = 0;
@@ -99,7 +101,8 @@ void setup()
   Wire.begin();         //加入 I2C 总线序列
   Serial.begin(115200); //开启串口，设置波特率为115200
   delay(500);
-  mpu6050.initialize(); //初始化MPU6050
+//  mpu6050.initialize(); //初始化MPU6050
+  MPU6050_Init();
   delay(2);
 
   // initialization
@@ -116,14 +119,16 @@ void loop() {
 
 void _callback1(void *usr_data)
 {
-  Serial.println(angle);
+  //Serial.println(angle);
+  //Serial.print(PD_pwm); Serial.print(", "); Serial.println(PI_pwm);
+  //Serial.print(pwm1); Serial.print(", "); Serial.println(pwm2);
   //Serial.println(PD_pwm);
   //Serial.println(pwm1);
   //Serial.println(pwm2);
-  //Serial.print("pulseright = ");
-  //Serial.println(pulseright);
-  //Serial.print("pulseleft = ");
-  //Serial.println(pulseleft);
+  Serial.print("pulseR:");
+  Serial.println(pulseright);
+  Serial.print("pulseL:");
+  Serial.println(pulseleft);
   //Serial.println(PI_pwm);
   //Serial.println(speeds_filter);
   //Serial.println (positions);
@@ -143,34 +148,34 @@ void Code_right()
 ////////////////////脉冲计算///////////////////////
 void countpluse()
 {
-  lz = count_left;     //将码盘计到的值赋给lz
-  rz = count_right;
+  int rpluse = 0;
+  int lpluse = 0;
 
-  count_left = 0;     //将码盘计数量清零
+  lpluse = count_left;
+  count_left = 0;
+
+  rpluse = count_right;
   count_right = 0;
 
-  lpluse = lz;
-  rpluse = rz;
-
-  if ((pwm1 < 0) && (pwm2 < 0)) //判断平衡车小车运动方向 如果后退时（PWM即电机电压为负） 脉冲数为负数
+  if( (pwm1 * pwm2) >= 0 )
   {
-    rpluse = -rpluse;
-    lpluse = -lpluse;
+    //判断平衡车小车运动方向 如果后退时（PWM即电机电压为负）脉冲数为负数
+    if( pwm1 < 0 ) {
+      rpluse = -rpluse;
+      lpluse = -lpluse;
+    }
   }
-  else if ((pwm1 > 0) && (pwm2 > 0))  //如果后退时（PWM即电机电压为正） 脉冲数为正数
+  else
   {
-    rpluse = rpluse;
-    lpluse = lpluse;
-  }
-  else if ((pwm1 < 0) && (pwm2 > 0))  //小车运动方向判断 左旋转 右脉冲数为正数 左脉冲数为负数
-  {
-    rpluse = rpluse;
-    lpluse = -lpluse;
-  }
-  else if ((pwm1 > 0) && (pwm2 < 0))  //小车运动方向判断 右旋转 右脉冲数为负数 左脉冲数为正数
-  {
-    rpluse = -rpluse;
-    lpluse = lpluse;
+    //小车运动方向判断 左旋转 右脉冲数为正数 左脉冲数为负数
+    if( pwm1 < 0 ) {
+      rpluse = rpluse;
+      lpluse = -lpluse;      
+    }
+    else {
+      rpluse = -rpluse;
+      lpluse = lpluse;
+    }
   }
 
   //每5ms进入中断时，脉冲数叠加
@@ -181,16 +186,18 @@ void countpluse()
 /////////////////////////////////中断////////////////////////////
 void _callback0(void *usr_data)
 {
+//  Serial.println(millis());
   countpluse(); //脉冲叠加子函数
-  mpu6050.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //IIC获取MPU6050六轴数据 ax ay az gx gy gz
+//  mpu6050.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //IIC获取MPU6050六轴数据 ax ay az gx gy gz
+  MPU6050_getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
   angle_calculate(ax, ay, az, gx, gy, gz, 
           dt, Q_angle, Q_gyro, R_angle, C_0, K1); //获取angle 角度和卡曼滤波
-  PD(); //角度环 PD控制
-  anglePWM();
+  PD(); // Compute PD PWM (角度變化)
+  anglePWM(); // Set PWM (Wheel)
 
   if( ++cc >= 8 ) //5*8=40，40ms进入一次速度的PI算法
   {
-    speedpiout();   
+    speedpiout(); // Compute PI PWM (車速變化)
     cc = 0;
   }
 }
@@ -249,20 +256,23 @@ void Kalman_Filter(double angle_m, double gyro_m)
 //////////////////角度PD////////////////////
 void PD()
 {
-  PD_pwm = kp * (angle + angle0) + kd * angle_speed; //PD 角度环控制
+  // 角度與角速度的方程式
+  PD_pwm = kp * (angle + angle0) + kd * angle_speed;
 }
 
 //////////////////速度PI////////////////////
 void speedpiout()
 {
-  float speeds = (pulseleft + pulseright) * 1.0;      //车速 脉冲值
-  pulseright = pulseleft = 0;      //清零
-  speeds_filterold *= 0.7;         //一阶互补滤波
-  speeds_filter = speeds_filterold + speeds * 0.3;
+  float speeds = (pulseleft + pulseright) * 1.0;  // 40ms的pulse計算車速
+  pulseright = pulseleft = 0; // clear
+  speeds_filterold *= 0.7;    // 一阶互补滤波
+  speeds_filter = speeds_filterold + speeds * 0.3; // 0.7前值 + 0.3現值
   speeds_filterold = speeds_filter;
-  positions += speeds_filter;
+  positions += speeds_filter; // 移動的距離
   positions = constrain(positions, -3550, 3550);  //抗积分饱和
-  PI_pwm = ki_speed * (setp0 - positions) + kp_speed * (setp0 - speeds_filter);      //速度环控制 PI
+  
+  // 距離與車速的控制方程式
+  PI_pwm = ki_speed * (setp0 - positions) + kp_speed * (setp0 - speeds_filter);
 }
 //////////////////速度PI////////////////////
 
@@ -270,17 +280,17 @@ void speedpiout()
 ////////////////////////////PWM终值/////////////////////////////
 void anglePWM()
 {
-  pwm2 = -PD_pwm - PI_pwm ; //赋给电机PWM的最终值
+  pwm2 = -PD_pwm - PI_pwm ; // 角度的PWM, 車速的PWM
   pwm1 = -PD_pwm - PI_pwm ;
 
   //限定PWM值不能超过255
   if( pwm1 > 255 )  pwm1 = 255;
   if( pwm1 < -255 ) pwm1 = -255;
   if( pwm2 > 255 )  pwm2 = 255;
-  if( pwm2 <- 255 ) pwm2=-255;
+  if( pwm2 < -255 ) pwm2 = -255;
 
   //自平衡小车倾斜角度大于45度，电机就会停转
-  if( angle > 80 || angle < -80 ) pwm1 = pwm2 = 0;
+  if( angle > 60 || angle < -60 ) pwm1 = pwm2 = 0;
 
   //根据PWM的正负来确定电机的转向和转速
   if( pwm2 >= 0 )
@@ -308,4 +318,56 @@ void anglePWM()
     digitalWrite(right_R2, LOW);
     analogWrite(PWM_R, (1000*1000)/PWM_FREQUENCY, -pwm1);
   }
+}
+
+void MPU6050_Init(){
+  // REGISTER 0x6B/REGISTER 107:Power Management 1
+  Wire.beginTransmission(MPU_ADDR); //This is the I2C address of the MPU (b1101000/b1101001 for AC0 low/high datasheet Sec. 9.2)
+  Wire.write(0x6B); //Accessing the register 6B/107 - Power Management (Sec. 4.30) 
+  Wire.write(0b00000000); //Setting SLEEP register to 0, using the internal 8 Mhz oscillator
+  Wire.endTransmission();
+
+  // REGISTER 0x1b/REGISTER 27:Gyroscope Configuration
+  Wire.beginTransmission(MPU_ADDR); //I2C address of the MPU
+  Wire.write(0x1B); //Accessing the register 1B - Gyroscope Configuration (Sec. 4.4) 
+  Wire.write(0x00000000); //Setting the gyro to full scale +/- 250deg./s (转化为rpm:250/360 * 60 = 41.67rpm) 最高可以转化为2000deg./s 
+  Wire.endTransmission();
+  
+  // REGISTER 0x1C/REGISTER 28:ACCELEROMETER CONFIGURATION
+  Wire.beginTransmission(MPU_ADDR); //I2C address of the MPU
+  Wire.write(0x1C); //Accessing the register 1C - Acccelerometer Configuration (Sec. 4.5) 
+  Wire.write(0b00000000); //Setting the accel to +/- 2g（if choose +/- 16g，the value would be 0b00011000）
+  Wire.endTransmission();
+}
+
+void MPU6050_getMotion6(int16_t *ax, int16_t *ay, int16_t *az, int16_t *gx, int16_t *gy, int16_t *gz)
+{
+  long accelX, accelY, accelZ;
+  long gyroX, gyroY, gyroZ;
+
+  // REGISTER 0x3B~0x40/REGISTER 59~64
+  Wire.beginTransmission(MPU_ADDR); //I2C address of the MPU
+  Wire.write(0x3B); //Starting register for Accel Readings
+  Wire.endTransmission();
+  Wire.requestFrom(MPU_ADDR, 6); //Request Accel Registers (3B - 40)
+
+  // 使用了左移<<和位运算|。Wire.read()一次读取1bytes，并在下一次调用时自动读取下一个地址的数据
+  while(Wire.available() < 6);  // Waiting for all the 6 bytes data to be sent from the slave machine （必须等待所有数据存储到缓冲区后才能读取） 
+  accelX = (Wire.read() << 8) | Wire.read(); //Store first two bytes into accelX （自动存储为定义的long型值）
+  accelY = (Wire.read() << 8) | Wire.read(); //Store middle two bytes into accelY
+  accelZ = (Wire.read() << 8) | Wire.read(); //Store last two bytes into accelZ
+
+  // REGISTER 0x43~0x48/REGISTER 67~72
+  Wire.beginTransmission(MPU_ADDR); //I2C address of the MPU
+  Wire.write(0x43); //Starting register for Gyro Readings
+  Wire.endTransmission();
+  Wire.requestFrom(MPU_ADDR, 6); //Request Gyro Registers (43 ~ 48)
+
+  while(Wire.available() < 6);
+  gyroX = (Wire.read() << 8) | Wire.read(); //Store first two bytes into accelX
+  gyroY = (Wire.read() << 8) | Wire.read(); //Store middle two bytes into accelY
+  gyroZ = (Wire.read() << 8) | Wire.read(); //Store last two bytes into accelZ
+
+  *ax = accelX; *ay = accelY; *az = accelZ;
+  *gx = gyroX; *gy = gyroY; *gz = gyroZ;
 }

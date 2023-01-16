@@ -1,3 +1,6 @@
+// Youtube 影片: 顯示模組 TFT-LCD ST7735 & OLED 1306 on Filogic130A (Arduino IDE)
+// https://youtu.be/JF1PXoPQ5IE
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -621,4 +624,3 @@ void mediabuttons() {
   // play color
   tft.fillTriangle(42, 20, 42, 60, 90, 40, ST77XX_GREEN);
 }
-

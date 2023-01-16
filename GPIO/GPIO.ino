@@ -1,3 +1,6 @@
+// Youtube 影片教學
+// https://youtu.be/oZ9UFsgVlxw
+
 #include "Arduino.h"
 #include "hal_gpio.h"
 
