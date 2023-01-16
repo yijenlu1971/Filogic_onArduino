@@ -57,3 +57,11 @@ PlayAudio : play alarm from internal RAM after pressing SW2/SW3 down.
 按下SW2或SW3鈕後，播放短語音
 
 ####################
+
+Car_Speed_Loop : self-balancing car 自動平衡車
+
+MPU6050 : 三軸重力加速計的模組
+
+TB6612_motor_encoder : 馬達驅動模組 以及 pulse 計數器
+
+####################
