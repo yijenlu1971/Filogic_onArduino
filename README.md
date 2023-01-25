@@ -1,6 +1,8 @@
 # Filogic
 Filogic Arduino SDK download: https://drive.google.com/drive/folders/1z7HscksgsalRfHW7T49nVbI60gY-weV7
 
+Youtube: https://www.youtube.com/watch?v=jckQQazaxCk&list=PLKzif2izCgMgxzFNsIPzpWcC789slgqvX
+
 MediaTek Filogic 130A development kit:
 
 All sample codes are compiled on Arduino IDE
