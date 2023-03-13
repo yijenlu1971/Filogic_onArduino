@@ -37,7 +37,7 @@ void setup() {
     Serial.print("hal_i2c_master_init err!!!\n");
   }
 
-  Lcm_Init(0x27);
+  Lcm_Init(0x27); // Addr: 0x27 or 0x3F
   delay(500);
 
   LCD_SendString(0, "Filogic 130A    ");
