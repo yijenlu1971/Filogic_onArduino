@@ -18,8 +18,8 @@ int ListWavFiles(FileName *list);
 void PlayWavFile(char *fname);
 }
 
-int sd_cd = 12; // SD card
-//int sd_cd = 35; // microSD
+int sd_cd = 12; // SD card on board -> GPIO_B_0
+//int sd_cd = 35; // microSD from plug-in -> GPIO_R_6
 bool bMount = false;
 int     fNum = 0;
 FileName  flist[16] = {0};
