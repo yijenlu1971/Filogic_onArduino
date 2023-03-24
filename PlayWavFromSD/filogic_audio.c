@@ -359,10 +359,10 @@ int audio_play_file_cmd(char audio_file[])
     return 0;
 }
 
-int pdct_f1(uint32_t check_mask)
+/*int pdct_f1(uint32_t check_mask)
 {
     return 0;
-}
+}*/
 
 int enable_adsp(void)
 {
@@ -568,4 +568,3 @@ CLOSE:
 
   vPortFree( Fil );
 }
-
